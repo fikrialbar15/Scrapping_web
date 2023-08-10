@@ -31,7 +31,40 @@ for row in column_data[1:]:
     length = len(df)
     df.loc[length] = individual_row_data
     
+#kolom data
+print("Kolom Database")    
 print(df)
+
+#merubah kolom rank menjadi integer
+df['Rank'] = df['Rank'].astype(int)
+
+print("Merubah kolom rank")
+print(df)
+
+#merubah kolom Revenue (USD millions), menghilangkan koma dan merubah menjadi integer
+df['Revenue (USD millions)'] = df['Revenue (USD millions)'].str.replace(",", "").astype(int)
+
+print("kolom Revenue(USD millions) di ubah")
+print(df)
+
+#Merubah kolom Revenue growth menjadi float dan menghapus %
+df['Revenue growth'] = df['Revenue growth'].str.replace("%", "").astype(float)
+
+print("Kolom Revenue growth di ubah")
+print(df)
+
+#merubah kolom Employees, menghapus koma dan merubah menjadi integer
+df['Employees'] = df['Employees'].str.replace(",", "").astype(int)
+
+print("Kolom Employees di ubah")
+print(df)
+
+#memasukan data Scrapping ke dalam database di pgadmin
+engine = create_engine(
+    f"postgresql://postgres:151515@localhost:5432/postgres")
+
+#companies ini nama tabel yang nantinya ada di pgadmin
+df.to_sql('companies_3', con=engine, if_exists="replace", index=False)
 
 #untuk menyimpan file dalam csv dan excel
 #df.to_csv(r'D:\PKL\scrapping web\Percobaan_Scraping_web_Companies.csv', index = False)
